@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170307042355) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "collections", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
@@ -25,7 +28,8 @@ ActiveRecord::Schema.define(version: 20170307042355) do
     t.integer  "collection_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["collection_id"], name: "index_webpages_on_collection_id"
+    t.index ["collection_id"], name: "index_webpages_on_collection_id", using: :btree
   end
 
+  add_foreign_key "webpages", "collections"
 end
