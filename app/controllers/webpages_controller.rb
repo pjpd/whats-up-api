@@ -4,7 +4,13 @@ class WebpagesController < ApplicationController
 
   # GET /collection/:collection_id/webpages
   def index
-    json_response(@collection.webpages)
+    webpages = @collection.webpages
+    r = []
+    webpages.each do |webpage|
+      text_is_there = is_text_at_url(webpage.text, webpage.url)
+      r << {is_up: text_is_there}.merge(webpage.as_json)
+    end
+    json_response(r)
   end
 
   # GET /collection/:collection_id/webpages/:id
